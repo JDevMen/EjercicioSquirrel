@@ -4,5 +4,5 @@ const url =
 fetch(url)
   .then((res) => res.json())
   .then((resp) => {
-    console.log("%cmain.js line:6 object", "color: #007acc;", resp);
+    console.log("Response", resp);
   });
