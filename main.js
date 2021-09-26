@@ -17,7 +17,8 @@ fetch(url)
       let cell2 = newRow.insertCell();
       let cell3 = newRow.insertCell();
 
-      cell1.innerHTML = index+1;
+      // cell1.innerHTML =  index+1;
+      cell1.outerHTML = `<th>${index+1}</th>`
       cell2.innerHTML = contenido.events.join(', ');
       cell3.innerHTML = contenido.squirrel;
     });
