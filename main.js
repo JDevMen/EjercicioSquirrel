@@ -22,7 +22,7 @@ fetch(url)
       let ar = [events,squirrel];
       content.push(ar);
 
-      cell1.outerHTML = `<th>${index+1}</th>`
+      cell1.outerHTML = `<th>${index+1}</th>`;
       cell2.innerHTML = events.join(', ');
       cell3.innerHTML = squirrel;
     });
@@ -78,6 +78,28 @@ fetch(url)
     });
     console.log("Events", typesOfEvents);
 
-    
+    let mcc = document.getElementById("mcc table");
+
+    typesOfEvents.forEach((tipo,i) => {
+      let newRow = mcc.insertRow();
+      let cell1 = newRow.insertCell();
+      let cell2 = newRow.insertCell();
+      let cell3 = newRow.insertCell();
+
+      cell1.outerHTML = `<th>${i+1}</th>`;
+      cell2.innerHTML = tipo[0];
+
+      let TN = tipo[1];
+      let FP = tipo[2];
+      let FN = tipo[3];
+      let TP = tipo[4];
+
+      let mccFormula = ((TP*TN)-(FP*FN))/Math.sqrt((TP+FP)*(TP+FN)*(TN+FP)*(TN+FN));
+      cell3.innerHTML = mccFormula;
+
+    });
+    console.log(mcc);
+
+
 
   });
