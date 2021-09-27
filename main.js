@@ -25,6 +25,7 @@ fetch(url)
       cell1.outerHTML = `<th>${index+1}</th>`;
       cell2.innerHTML = events.join(', ');
       cell3.innerHTML = squirrel;
+      if(squirrel) newRow.className = "table-danger";
     });
 
     content.forEach(element => {
