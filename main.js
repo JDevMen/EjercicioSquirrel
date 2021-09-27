@@ -3,13 +3,13 @@ const url =
 
   let array = [];
   let table = document.getElementById("table");
+  let content = [];
+  let typesOfEvents = [];
 
 fetch(url)
   .then((res) => res.json())
   .then((resp) => {
     array = resp;
-    console.log("Response", resp);
-    console.log("Es un array? ",Array.isArray(array));
     
     array.forEach((contenido,index) => {
       let newRow = table.insertRow();
@@ -17,25 +17,67 @@ fetch(url)
       let cell2 = newRow.insertCell();
       let cell3 = newRow.insertCell();
 
-      // cell1.innerHTML =  index+1;
+      let events = contenido.events;
+      let squirrel = contenido.squirrel;
+      let ar = [events,squirrel];
+      content.push(ar);
+
       cell1.outerHTML = `<th>${index+1}</th>`
-      cell2.innerHTML = contenido.events.join(', ');
-      cell3.innerHTML = contenido.squirrel;
+      cell2.innerHTML = events.join(', ');
+      cell3.innerHTML = squirrel;
     });
+
+    content.forEach(element => {
+      element[0].forEach(eve => {
+        if(!typesOfEvents.includes(eve)) 
+        {
+          typesOfEvents.push(eve);
+        }
+        
+      });
+    });
+
+    typesOfEvents.forEach((element,index) => {
+      let array = [];
+      array.push(element);
+      //True negatives
+      array.push(0);
+      //False positives
+      array.push(0);
+      //False negatives
+      array.push(0);
+      //True positives
+      array.push(0);
+      
+      typesOfEvents[index]= array;
+    });
+
+
+    typesOfEvents.forEach(element =>{
+      content.forEach(contenido => {
+        let currentContent= contenido[0];
+        let isSquirrel = contenido[1];
+        if(!currentContent.includes(element[0])){
+          //Caso true negative
+          if(!isSquirrel){
+            element[1]++;
+          }else{
+            //Caso false positives
+            element[2]++; 
+          }
+        }else{
+          //Caso false negative
+          if(!isSquirrel){
+            element[3]++;
+          }else{
+            //Caso true positive
+            element[4]++; 
+          }
+        }
+      });
+    });
+    console.log("Events", typesOfEvents);
+
+    
+
   });
-
-  
-
-  // let table = document.getElementById("table");
-  // let row =  table.insertRow();
-  // let cell1 = row.insertCell();
-  // let cell2 = row.insertCell();
-  // let cell3 = row.insertCell();
-
-  // cell1.innerHTML = "4";
-  // cell2.innerHTML = ["Prueba","Test","algo"];
-  // cell3.innerHTML = false;
-  // console.log(table);
-
-  
-  
