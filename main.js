@@ -2,7 +2,7 @@ const url =
   "https://gist.githubusercontent.com/josejbocanegra/b1873c6b7e732144355bb1627b6895ed/raw/d91df4c8093c23c41dce6292d5c1ffce0f01a68b/newDatalog.json";
 
 let array = [];
-let table = document.getElementById("table");
+let table = document.getElementById("table").getElementsByTagName("tbody")[0];
 let content = [];
 let typesOfEvents = [];
 
@@ -79,7 +79,6 @@ fetch(url)
 
     let mccArray = [];
     typesOfEvents.forEach((tipo, i) => {
-
       let fila = [];
       fila.push(tipo[0]);
 
@@ -91,18 +90,16 @@ fetch(url)
       let mccFormula =
         (TP * TN - FP * FN) /
         Math.sqrt((TP + FP) * (TP + FN) * (TN + FP) * (TN + FN));
-      
-        fila.push(mccFormula);
-        mccArray.push(fila);
-      
+
+      fila.push(mccFormula);
+      mccArray.push(fila);
     });
 
-
-    mccArray.sort(function(a,b) {
-      return b[1]-a[1];
+    mccArray.sort(function (a, b) {
+      return b[1] - a[1];
     });
 
-    mccArray.forEach((element,i) => {
+    mccArray.forEach((element, i) => {
       let newRow = mcc.insertRow();
       let cell1 = newRow.insertCell();
       let cell2 = newRow.insertCell();
@@ -111,7 +108,5 @@ fetch(url)
       cell1.outerHTML = `<th>${i + 1}</th>`;
       cell2.innerHTML = element[0];
       cell3.innerHTML = element[1];
-
     });
-
   });
